@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splash">
+
+    <fragment
+        android:id="@+id/splash"
+        android:name="com.livehomeradio.views.splash.Splash"
+        android:label="Splash" >
+        <action
+            android:id="@+id/action_splash_to_login"
+            app:destination="@id/login"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"
+            app:popUpTo="@id/splash"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.livehomeradio.views.login.Login"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_forgotPassword"
+            app:destination="@id/forgotPassword"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"
+            app:popUpTo="@id/forgotPassword"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_login_to_home2"
+            app:destination="@id/home2" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpVerification"
+        android:name="com.livehomeradio.views.otpverification.OtpVerification"
+        android:label="OtpVerification" >
+    </fragment>
+    <fragment
+        android:id="@+id/forgotPassword"
+        android:name="com.livehomeradio.views.forgotpassword.ForgotPassword"
+        android:label="ForgotPassword" >
+        <action
+            android:id="@+id/action_forgotPassword_to_otpVerification"
+            app:destination="@id/otpVerification"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"
+            app:popUpTo="@id/forgotPassword"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/notifications"
+        android:name="com.livehomeradio.views.notifications.Notifications"
+        android:label="Notifications" />
+
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.livehomeradio.views.chat.Chat"
+        android:label="Chat" />
+    <fragment
+        android:id="@+id/setting"
+        android:name="com.livehomeradio.views.setting.Setting"
+        android:label="Setting" >
+
+        <action
+            android:id="@+id/action_setting_to_contactUs"
+            app:destination="@id/contactUs" />
+
+        <action
+            android:id="@+id/action_setting_to_changePassword"
+            app:destination="@id/changePassword" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactUs"
+        android:name="com.livehomeradio.views.contactus.ContactUs"
+        android:label="ContactUs" />
+    <fragment
+        android:id="@+id/changePassword"
+        android:name="com.livehomeradio.views.changepassword.ChangePassword"
+        android:label="ChangePassword" />
+    <fragment
+        android:id="@+id/profile"
+        android:name="com.livehomeradio.views.profile.Profile"
+        android:label="Profile" />
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.livehomeradio.views.home.Home"
+        android:label="Home" />
+</navigation>

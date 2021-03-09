@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.livehomeradio.views.otpverification.OtpVerificationVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_margin="@dimen/_5sdp"
+            android:onClick="@{viewModel::clickBack}"
+            android:padding="@dimen/_10sdp"
+            android:src="@drawable/ic_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_otp_verification"
+            app:layout_constraintBottom_toTopOf="@id/gdLoginOne"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdLoginOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".50" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLetsSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:letterSpacing="0.02"
+            android:lineSpacingExtra="10sp"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/otp_authentication"
+            android:textColor="@color/_212121"
+            android:textSize="@dimen/sp20"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gdLoginOne" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:letterSpacing="0.02"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/an_authentication_code_has_been_sent_to_91_999_999_999_0"
+            android:textColor="@color/_b4b3b3"
+            android:textSize="@dimen/sp14"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/tvLetsSignIn" />
+
+        <com.mukesh.mukeshotpview.mukeshOtpView.MukeshOtpView
+            android:id="@+id/otpView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:inputType="number"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp20"
+            android:textStyle="bold"
+            app:hideLineWhenFilled="false"
+            app:itemCount="4"
+            app:itemHeight="@dimen/dp55"
+            app:itemSpacing="@dimen/_20sdp"
+            app:itemWidth="@dimen/dp55"
+            app:layout_constraintBottom_toTopOf="@id/tvTimer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:state_filled="true"
+            app:viewType="line" />
+
+        <TextView
+            android:id="@+id/tvTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_15sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:lineSpacingExtra="1sp"
+            android:text="@string/_00_36_seconds"
+            android:textColor="#031844"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/btSignIn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btSignIn"
+            android:layout_width="0dp"
+            android:onClick="@{viewModel::resend}"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_35sdp"
+            android:background="@drawable/button_bg"
+            android:elevation="0dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="@string/resend"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

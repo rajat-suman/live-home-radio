@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+   >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_7sdp"
+            android:gravity="end"
+            android:background="@drawable/ic_sender"
+            android:maxWidth="@dimen/_350sdp"
+            android:padding="@dimen/_10sdp"
+            android:text="OK, I'm in front of\nthe bus stop"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp14" />
+
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.livehomeradio.views.login.LoginVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_login"
+            app:layout_constraintBottom_toTopOf="@id/gdLoginOne"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdLoginOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".40" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLetsSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:fontFamily="@font/poppins_bold"
+            android:letterSpacing="0.02"
+            android:lineSpacingExtra="10sp"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/let_s_sign_you_in"
+            android:textColor="@color/_212121"
+            android:textSize="@dimen/sp20"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gdLoginOne" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:letterSpacing="0.02"
+            android:paddingStart="@dimen/_10sdp"
+            android:text="@string/welcome_back_you_ve_been_missed"
+            android:textColor="@color/_b4b3b3"
+            android:textSize="@dimen/sp14"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/etEmail"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/tvLetsSignIn" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etEmail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/white"
+            app:boxBackgroundMode="none"
+            app:hintEnabled="false"
+            app:layout_constraintBottom_toTopOf="@id/viewOne"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_mail"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/your_email"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/_acacac"
+                android:textSize="@dimen/sp16" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/viewOne"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@color/_8f92a1"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/etEmail" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@color/white"
+            app:boxBackgroundMode="none"
+            app:hintEnabled="false"
+            app:layout_constraintBottom_toTopOf="@id/viewTwo"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/viewOne"
+            app:passwordToggleEnabled="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:drawableStart="@drawable/ic_lock"
+                android:drawablePadding="@dimen/_10sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:textColor="@color/_acacac"
+                android:textSize="@dimen/sp16" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:id="@+id/viewTwo"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:background="@color/_8f92a1"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppins_semibold"
+            android:letterSpacing="0.02"
+            android:onClick="@{viewModel.clickForgot}"
+            android:padding="@dimen/_5sdp"
+            android:text="@string/forgot_password"
+            android:textColor="@color/_7cb0e1"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toTopOf="@id/btSignIn"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/viewTwo" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/button_bg"
+            android:elevation="0dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:onClick="@{viewModel::clickLogin}"
+            android:text="@string/signin"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tvLetsSignIn"
+            app:layout_constraintStart_toStartOf="@id/tvLetsSignIn"
+            app:layout_constraintTop_toBottomOf="@id/tvForgotPassword" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
