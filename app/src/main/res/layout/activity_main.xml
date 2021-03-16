@@ -33,7 +33,7 @@
             android:elevation="@dimen/_5sdp"
             android:orientation="horizontal"
             android:visibility="@{viewModel.isBottom ? View.VISIBLE : View.GONE}"
-            android:weightSum="4"
+            android:weightSum="3"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <LinearLayout
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
                     android:lineSpacingExtra="6sp"
-                    android:text="@string/explore"
+                    android:text="@string/dashboard"
                     android:textColor="@{viewModel.isHome?@color/_7cb0e1: @color/_b4b3b3}"
                     android:textSize="12sp"
                     android:textStyle="normal" />
@@ -103,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:background="@drawable/ripple"
                 android:gravity="center"
                 android:onClick="@{viewModel::clickNotifications}"

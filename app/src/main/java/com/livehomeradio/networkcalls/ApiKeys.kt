@@ -1,5 +1,7 @@
 package com.livehomeradio.networkcalls
 
 enum class ApiKeys {
-    LOGIN
+    LOGIN,
+    CHANGE_PASSWORD,
+    DASHBOARD,
 }

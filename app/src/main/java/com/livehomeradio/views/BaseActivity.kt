@@ -2,6 +2,7 @@ package com.livehomeradio.views
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,11 +18,19 @@ import com.google.android.play.core.install.model.ActivityResult
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 class BaseActivity : AppCompatActivity() {
     private val mainVM: MainVM by viewModels()
+    companion object{
+       lateinit var contextIs:WeakReference<Context>
+    }
 
+    override fun onStart() {
+        super.onStart()
+        contextIs= WeakReference(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding =

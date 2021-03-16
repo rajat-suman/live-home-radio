@@ -27,7 +27,7 @@ import javax.inject.Inject
 class MainVM @Inject constructor(
     private val repository: Repository,
     private val preferenceFile: PreferenceFile,
-    private val dataStore: DataStoreUtil,
+    private val dataStore: DataStoreUtil
 ) : ViewModel(), HomeListener {
 
     lateinit var navController: NavController
@@ -53,8 +53,8 @@ class MainVM @Inject constructor(
     }
 
     fun clickHome(view: View) {
-     /*   if (!isHome.get())
-            navController.navigate(R.id.home2)*/
+        if (!isHome.get())
+            navController.navigate(R.id.home2)
     }
 
     fun clickNotifications(view: View) {
@@ -67,46 +67,6 @@ class MainVM @Inject constructor(
             navController.navigate(R.id.setting)
     }
 
-    fun observerData() = viewModelScope.launch {
-
-        dataStore.saveData(LOGIN_DATA, "login${Math.random()}")
-
-        val json = JSONObject()
-        json.put("email", "rajatsuman@yopmail.com")
-        json.put("password", "Rajat@123")
-        json.put("deviceType", "ANDROID")
-        json.put("deviceToken", "qwertyuiop")
-
-        val requestBody =
-            json.toString().toRequestBody("application/json".toMediaTypeOrNull())
-
-        repository.makeCall(
-            ApiKeys.LOGIN,
-            loader = true,
-            saveInCache = true,
-            requestProcessor = object :
-                ApiProcessor<Response<BaseResponse<Any>>> {
-                override suspend fun sendRequest(retrofitApi: RetrofitApi): Response<BaseResponse<Any>> {
-                    return retrofitApi.login(requestBody)
-                }
-
-                override fun onResponse(res: Response<BaseResponse<Any>>) {
-                    /*  preferenceFile.storeKey("login", "yes")
-                              dataStore.saveData(THEME_KEY, "YESS")*/
-                    //                Toast.makeText(context, "Login Success", Toast.LENGTH_LONG).show()
-                    Log.d("successBodyOnResponse", "====${res.body()}")
-
-                    GlobalScope.launch {
-                        dataStore.readData(LOGIN_DATA) {
-                            Log.d("readData", "====${it}")
-
-                        }
-
-                    }
-
-                }
-            })
-    }
 
     private fun startLongRunningTask(): Int {
         var lastVal = 0

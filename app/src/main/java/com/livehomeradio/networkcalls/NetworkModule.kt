@@ -22,9 +22,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 class NetworkModule {
-
     @Provides
-    fun provideBaseUrl() = "http://appgrowthcompany.com:4019/api/v1/"
+    fun provideBaseUrl() = BASE_URL
 
     @Singleton
     @Provides
@@ -34,15 +33,14 @@ class NetworkModule {
         OkHttpClient.Builder()
             .readTimeout(1, TimeUnit.MINUTES)
             .connectTimeout(1, TimeUnit.MINUTES)
-          /*  .addInterceptor { chain ->
-                val original = chain.request()
-                val request = original.newBuilder()
-                    .header("Authorization", "token")
-                    .header("lang", "ENGLISH")
-                    //                    .method(original.method, original.body)
-                    .build()
-                chain.proceed(request)
-            }*/
+            /* .addInterceptor { chain ->
+
+                 val original = chain.request()
+                 var request = original.newBuilder()
+                     .header("Authorization", "Bearer $auth")
+                     .build()
+                 chain.proceed(request)
+             }*/
             .addInterceptor(loggingInterceptor)
             .build()
     } else {
@@ -53,18 +51,18 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun gsonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
+    fun gSonConverterFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     @Singleton
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory,
+        gSonConverterFactory: GsonConverterFactory,
         BASE_URL: String
     ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(okHttpClient)
-        .addConverterFactory(gsonConverterFactory)
+        .addConverterFactory(gSonConverterFactory)
         .addCallAdapterFactory(CoroutineCallAdapterFactory()).build()
 
     @Provides
@@ -82,4 +80,5 @@ class NetworkModule {
             t.printStackTrace()
         }
     }
+
 }

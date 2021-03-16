@@ -9,5 +9,6 @@ const val FOREVER_DATA_STORE_NAME = "ForeverBaronCustomer"
 val THEME_KEY by lazy { stringPreferencesKey("theme_key") }
 val BOOLEAN_DATA by lazy { booleanPreferencesKey("BOOLEAN") }
 val LOGIN_DATA by lazy { stringPreferencesKey("LOGIN_DATA") }
+val JWT by lazy { stringPreferencesKey("JWT") }
 val REMEMBER by lazy { booleanPreferencesKey("REMEMBER") }
 val LANGUAGE by lazy { stringPreferencesKey("LANGUAGE") }

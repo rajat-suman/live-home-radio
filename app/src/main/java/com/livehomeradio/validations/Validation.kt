@@ -1,10 +1,11 @@
 package com.livehomeradio.validations
 
 import android.app.Activity
+import android.content.Context
 import com.livehomeradio.utils.showNegativeAlerter
 
 
-class Validation(private val baseActivity: Activity?) {
+class Validation(private val baseActivity: Context) {
     private var validators: ArrayList<Validator>? = null
 
     init {
@@ -12,7 +13,7 @@ class Validation(private val baseActivity: Activity?) {
     }
 
     companion object {
-        fun create(baseActivity: Activity?): Validation {
+        fun create(baseActivity: Context): Validation {
             return Validation(baseActivity)
         }
     }

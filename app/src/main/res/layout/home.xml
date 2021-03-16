@@ -12,5 +12,210 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".views.home.Home"/>
+        tools:context=".views.home.Home">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_home"
+            app:layout_constraintBottom_toTopOf="@id/gdLine"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdLine"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".33" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gdLine2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".8" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            android:elevation="@dimen/_5sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="@string/dashboard"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp18"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvCurrentListeners"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintEnd_toStartOf="@id/cvTotalMemory"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvCurrentSong">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/current_listeners"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/sp16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_weight="1"
+                    android:elevation="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@{String.valueOf(viewModel.model.listeners)}"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/sp18" />
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvTotalMemory"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cvCurrentListeners"
+            app:layout_constraintTop_toBottomOf="@id/cvCurrentSong">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/total_memory_used"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/sp16" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="20"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/sp18" />
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvCurrentSong"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="@dimen/_100sdp"
+            app:cardCornerRadius="@dimen/_5sdp"
+            app:contentPadding="@dimen/_5sdp"
+            app:layout_constraintBottom_toTopOf="@id/gdLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gdLine">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text="@string/current_song"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/sp16" />
+
+                <TextView
+                    android:id="@+id/tvSong"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:elevation="@dimen/_5sdp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
+                    android:padding="@dimen/_7sdp"
+                    android:text='@{viewModel.model.title}'
+                    android:ellipsize = "marquee"
+                    android:fadingEdge = "horizontal"
+                    android:marqueeRepeatLimit = "marquee_forever"
+                    android:scrollHorizontally = "true"
+                    android:singleLine = "true"
+                    android:textColor="@color/purple_500"
+                    android:textSize="@dimen/sp18" />
+
+
+            </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/tvAdd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_20sdp"
+            android:background="@drawable/button_bg"
+            android:elevation="@dimen/_2sdp"
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:text="@string/make_call"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cvCurrentListeners" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

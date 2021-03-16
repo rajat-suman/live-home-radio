@@ -37,4 +37,25 @@
     <string name="reenter_password">"Re- Enter New Password "</string>
     <string name="new_password">New Password</string>
     <string name="history">History</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="current_listeners">Current Listeners</string>
+    <string name="current_song">Current Song</string>
+    <string name="total_memory_used">Total Memory Used</string>
+    <string name="make_call">Make Call</string>
+
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="asterisk">*</string>
+    <string name="zero">0</string>
+    <string name="hash">#</string>
+    <string name="dial">Dial</string>
+    <string name="backspace">&lt;=</string>
+    <string name="some_error_occured">Some Error Occured!</string>
 </resources>

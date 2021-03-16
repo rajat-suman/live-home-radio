@@ -200,6 +200,11 @@ fun Context.selectDate(observableField: ObservableField<String>) {
     datePicker.show()
 }
 
+
+fun getRequestBody(string: String): RequestBody {
+    return string.toRequestBody("application/json".toMediaTypeOrNull())
+}
+
 /**string to part request body*/
 fun getPartRequestBody(string: String): RequestBody {
     return string.toRequestBody("multipart/form-data".toMediaTypeOrNull())

@@ -17,6 +17,8 @@ class Home : Fragment(R.layout.home) {
         super.onViewCreated(view, savedInstanceState)
         binding = HomeBinding.bind(view)
         binding?.viewModel = viewModel
+        viewModel.hitDashBoard()
+        binding?.tvSong?.isSelected=true
     }
 
     override fun onResume() {

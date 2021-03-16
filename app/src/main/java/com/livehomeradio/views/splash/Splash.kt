@@ -1,14 +1,11 @@
 package com.livehomeradio.views.splash
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.livehomeradio.R
 import com.livehomeradio.databinding.SplashBinding
-import com.livehomeradio.utils.navigateWithId
 import com.livehomeradio.views.MainVM
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,9 +17,7 @@ class Splash : Fragment(R.layout.splash) {
         super.onViewCreated(view, savedInstanceState)
         binding = SplashBinding.bind(view)
         binding?.viewModel = viewModel
-        Handler(Looper.myLooper()!!).postDelayed({
-            binding?.root?.navigateWithId(R.id.action_splash_to_login, null)
-        }, 2000)
+        viewModel.setState(binding?.root!!)
     }
 
     override fun onResume() {
