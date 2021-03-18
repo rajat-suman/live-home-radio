@@ -21,9 +21,15 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
-        maven { url 'https://jitpack.io' }
+        maven {
+            url 'https://jitpack.io'
+        }
+        maven {
+            url "https://artifactory.ess-dev.com/artifactory/gradle-dev-local"
+        }
         google()
         jcenter()
+
     }
 }
 

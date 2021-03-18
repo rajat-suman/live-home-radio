@@ -18,6 +18,8 @@ class Home : Fragment(R.layout.home) {
         binding = HomeBinding.bind(view)
         binding?.viewModel = viewModel
         viewModel.hitDashBoard()
+        viewModel.        hitCallerToken()
+
         binding?.tvSong?.isSelected=true
     }
 

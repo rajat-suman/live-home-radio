@@ -15,14 +15,19 @@ interface RetrofitApi {
 
     @PUT(CHANGE_PASSWORD)
     suspend fun changePassword(
-        @Header("Authorization") header:String,
-       @Query("oldPassword") oldPassword:String?,
-       @Query("password") password:String?
+        @Header("Authorization") header: String,
+        @Query("oldPassword") oldPassword: String?,
+        @Query("password") password: String?
     ): Response<Any>
+
+    @GET(CALLER_JWT)
+    suspend fun getCallerToken(
+        @Header("Authorization") header: String
+        ): Response<LoginModel>
 
 
     @GET(DASHBOARD)
     suspend fun dashBoard(
-        @Header("Authorization") header:String,
+        @Header("Authorization") header: String,
     ): Response<DashBoardModel>
 }

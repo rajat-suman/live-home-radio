@@ -58,4 +58,6 @@
     <string name="dial">Dial</string>
     <string name="backspace">&lt;=</string>
     <string name="some_error_occured">Some Error Occured!</string>
+    <string name="incoming_calls">Incoming Calls</string>
+    <string name="ongoing_call">Ongoing call</string>
 </resources>

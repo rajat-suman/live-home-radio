@@ -17,11 +17,11 @@ class Splash : Fragment(R.layout.splash) {
         super.onViewCreated(view, savedInstanceState)
         binding = SplashBinding.bind(view)
         binding?.viewModel = viewModel
-        viewModel.setState(binding?.root!!)
     }
 
     override fun onResume() {
         super.onResume()
+        viewModel.setState(binding?.root!!)
         setBottomSheet()
     }
 

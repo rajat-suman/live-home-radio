@@ -15,7 +15,7 @@ import com.livehomeradio.R
 class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
     RecyclerView.Adapter<RecyclerAdapter.VH<T>>() {
     private val animatedPosition: HashSet<Int> by lazy { HashSet() }
-    private val items by lazy { mutableListOf<T>() }
+     val items by lazy { mutableListOf<T>() }
     private var inflater: LayoutInflater? = null
     private var onItemClick: OnItemClick? = null
     private var isAnimation = true
@@ -79,7 +79,7 @@ class RecyclerAdapter<T : AbstractModel>(@LayoutRes val layoutId: Int) :
         }
     }
 
-    fun interface OnItemClick {
+     interface OnItemClick {
         fun onClick(view: View, position: Int, type: String)
     }
 }
