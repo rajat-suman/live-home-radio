@@ -1,8 +1,18 @@
 package com.livehomeradio.views.home
 
+import android.app.ActionBar
+import android.app.Dialog
+import android.view.Gravity
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.recyclerview.widget.RecyclerView
+import com.livehomeradio.R
 import com.livehomeradio.datastore.DataStoreUtil
 import com.livehomeradio.datastore.JWT
 import com.livehomeradio.models.DashBoardModel
@@ -12,6 +22,8 @@ import com.livehomeradio.networkcalls.ApiProcessor
 import com.livehomeradio.networkcalls.Repository
 import com.livehomeradio.networkcalls.RetrofitApi
 import com.livehomeradio.pref.PreferenceFile
+import com.livehomeradio.recycleradapter.RecyclerAdapter
+import com.livehomeradio.utils.ContactsUtil
 import com.livehomeradio.views.BaseActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -28,7 +40,7 @@ class HomeVM @Inject constructor(
 
     companion object {
         var callToken = ""
-        var onReceiveToken: BaseActivity.OnReceiveToken? = null
+        var nexmoCallListener: BaseActivity.NexmoCallListeners? = null
     }
 
 
@@ -69,7 +81,7 @@ class HomeVM @Inject constructor(
 
                         override fun onSuccess(res: Response<LoginModel>) {
                             callToken = res.body()?.jwt ?: ""
-                            onReceiveToken?.tokenReceived(callToken)
+                            nexmoCallListener?.tokenReceived(callToken)
                         }
                     })
             }
@@ -78,5 +90,52 @@ class HomeVM @Inject constructor(
         }
     }
 
+    fun clickMakeCall(view: View) {
+        try {
+            val dialog = Dialog(view.context, android.R.style.Theme_Translucent_NoTitleBar)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.make_call)
+            val window: Window? = dialog.window
+            val wlp: WindowManager.LayoutParams = window?.attributes!!
+
+            wlp.gravity = Gravity.CENTER
+            wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+            window.attributes = wlp
+            dialog.window?.setLayout(
+                ActionBar.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT
+            )
+            dialog.show()
+            val adapter = RecyclerAdapter<ContactsUtil.ContactsModel>(R.layout.call_item)
+            dialog.findViewById<RecyclerView>(R.id.rvContacts).adapter = adapter
+            dialog.findViewById<ImageView>(R.id.ivCross).setOnClickListener {
+                dialog.dismiss()
+            }
+            val etPhoneNumber = dialog.findViewById<EditText>(R.id.etPhoneNumber)
+            dialog.findViewById<ImageView>(R.id.btCallDial).setOnClickListener {
+                if (etPhoneNumber.text.toString().trim().isNotEmpty()) {
+                    makeCall(etPhoneNumber.text.toString().trim())
+                    dialog.dismiss()
+                }
+            }
+
+            adapter.setOnItemClick(object : RecyclerAdapter.OnItemClick {
+                override fun onClick(view: View, position: Int, type: String) {
+                    makeCall(adapter.items[position].number)
+                    dialog.dismiss()
+                }
+            })
+
+            adapter.addItems(BaseActivity.contactsList)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+    }
+
+    private fun makeCall(phoneNo: String) {
+        nexmoCallListener?.makeCall(phoneNo)
+    }
 
 }

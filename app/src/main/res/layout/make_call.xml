@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clTop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="@dimen/_8sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_50sdp"
+                android:elevation="@dimen/_5sdp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
+                android:text="@string/make_call"
+                android:textColor="@color/black"
+                android:textSize="@dimen/sp18"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCross"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_10sdp"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/llDial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_7sdp"
+            android:layout_marginEnd="@dimen/_7sdp"
+            android:orientation="horizontal"
+            android:padding="@dimen/_10sdp"
+            android:weightSum="10"
+            app:layout_constraintTop_toBottomOf="@id/clTop">
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="9"
+                android:hint="@string/enter_phone_number"
+                android:inputType="number"
+                android:singleLine="true"
+                android:textColorHint="@color/black"
+                tools:ignore="TextFields" />
+
+            <ImageView
+                android:id="@+id/btCallDial"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_phone_call" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/llDial"
+            tools:listitem="@layout/call_item" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
