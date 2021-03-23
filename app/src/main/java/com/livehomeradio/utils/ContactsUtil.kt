@@ -3,7 +3,6 @@ package com.livehomeradio.utils
 import android.content.ContentResolver
 import android.database.Cursor
 import android.provider.ContactsContract
-import android.util.Log
 import com.livehomeradio.recycleradapter.AbstractModel
 
 object ContactsUtil {
@@ -47,12 +46,13 @@ object ContactsUtil {
             }
         }
         cur?.close()
+        list.sortBy { it.name }
         return list
     }
 
     data class ContactsModel(
         var name: String = "",
         var number: String = ""
-    ):AbstractModel()
+    ) : AbstractModel()
 
 }

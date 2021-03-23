@@ -256,13 +256,12 @@ class BaseActivity : AppCompatActivity() {
 
     private fun setupNexmo() {
         try {
-            val ctx = contextIs.get()!!
-            client = NexmoClient.Builder().build(ctx)
+            client = NexmoClient.Builder().build(this)
 
             //Connection Listener
             client?.setConnectionListener { connectionStatus, _ ->
-                (ctx as Activity).runOnUiThread {
-                    Toast.makeText(ctx, connectionStatus.name, Toast.LENGTH_LONG).show()
+                runOnUiThread {
+                    Toast.makeText(this, connectionStatus.name, Toast.LENGTH_LONG).show()
                 }
             }
 
@@ -279,13 +278,16 @@ class BaseActivity : AppCompatActivity() {
                         p0: NexmoCallMemberStatus?,
                         p1: NexmoCallMember?
                     ) {
-                        /* if (p0 == NexmoCallMemberStatus.REJECTED || p0 == NexmoCallMemberStatus.CANCELED) {
+
+                        Log.e("jfjvdbjb", "uscdbdbvvd===$p0")
+
+                         if (p0 == NexmoCallMemberStatus.REJECTED || p0 == NexmoCallMemberStatus.CANCELED|| p0 == NexmoCallMemberStatus.COMPLETED) {
                              callList.remove(callList.first { callIs -> callIs.nexmoCall == it })
                              callBottomSheet.updateCalls(callList)
                              if (callList.isEmpty()) {
                                  callBottomSheet.dismiss()
                              }
-                         }*/
+                         }
                     }
 
                     override fun onMuteChanged(p0: NexmoMediaActionState?, p1: NexmoCallMember?) {

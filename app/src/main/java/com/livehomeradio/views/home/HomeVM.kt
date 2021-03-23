@@ -8,6 +8,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -111,6 +112,20 @@ class HomeVM @Inject constructor(
             dialog.findViewById<ImageView>(R.id.ivCross).setOnClickListener {
                 dialog.dismiss()
             }
+            dialog.findViewById<EditText>(R.id.etSearch)
+                .doOnTextChanged { text, _, _, _ ->
+                    if (text.toString().trim().isNotEmpty()) {
+                        val filteredList = BaseActivity.contactsList.filter {
+                            it.name.startsWith(
+                                text.toString().trim(),
+                                ignoreCase = true
+                            )
+                        }
+                        adapter.addItems(filteredList)
+                    } else {
+                        adapter.addItems(BaseActivity.contactsList)
+                    }
+                }
             val etPhoneNumber = dialog.findViewById<EditText>(R.id.etPhoneNumber)
             dialog.findViewById<ImageView>(R.id.btCallDial).setOnClickListener {
                 if (etPhoneNumber.text.toString().trim().isNotEmpty()) {
