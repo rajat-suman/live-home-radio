@@ -62,4 +62,5 @@
     <string name="ongoing_call">Ongoing call</string>
     <string name="enter_phone_number">Enter phone number</string>
     <string name="search">Search..</string>
+    <string name="logout_message">AreYou Sure? You want to logout!</string>
 </resources>

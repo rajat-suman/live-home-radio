@@ -45,10 +45,13 @@ class DataStoreUtil @Inject constructor(
         }
     }
 
-    fun <T> removeKey(key: Preferences.Key<T>) {
+    fun <T> removeKey(key: Preferences.Key<T>, valueIs : (Any)->Unit) {
         CoroutineScope(Dispatchers.IO + coRoutineExceptionHandler).launch {
             dataStore.edit { preferences ->
                 preferences.remove(key)
+                CoroutineScope(Dispatchers.Main).launch {
+         valueIs("")
+                }
             }
         }
     }

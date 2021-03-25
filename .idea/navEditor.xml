@@ -93,7 +93,24 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_login_to_home2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="makeCall">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="2036" />
+                            <option name="y" value="1597" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -155,6 +172,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_setting_to_login">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -171,6 +193,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_splash_to_home2">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_splash_to_login">
                               <value>
                                 <LayoutPositions />

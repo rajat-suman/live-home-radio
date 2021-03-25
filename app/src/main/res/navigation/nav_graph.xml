@@ -84,6 +84,15 @@
         <action
             android:id="@+id/action_setting_to_changePassword"
             app:destination="@id/changePassword" />
+        <action
+            android:id="@+id/action_setting_to_login"
+            app:destination="@id/login"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit"
+            app:popUpTo="@id/home2"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/contactUs"
@@ -100,5 +109,17 @@
     <fragment
         android:id="@+id/home2"
         android:name="com.livehomeradio.views.home.Home"
-        android:label="Home" />
+        android:label="Home" >
+        <action
+            android:id="@+id/action_home2_to_makeCall"
+            app:destination="@id/makeCall"
+            app:enterAnim="@anim/enter"
+            app:exitAnim="@anim/exit"
+            app:popEnterAnim="@anim/pop_enter"
+            app:popExitAnim="@anim/pop_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeCall"
+        android:name="com.livehomeradio.views.makecall.MakeCall"
+        android:label="MakeCall" />
 </navigation>

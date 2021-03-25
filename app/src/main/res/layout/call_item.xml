@@ -45,6 +45,7 @@
     <ImageView
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
+        android:onClick="@{(v)->model.onItemClick.onClick(v, model.adapterPosition, ``)}"
     android:layout_weight="1"    android:layout_marginStart="@dimen/_10sdp"
         android:src="@drawable/ic_phone_call" />
 

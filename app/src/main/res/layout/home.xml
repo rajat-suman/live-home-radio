@@ -134,7 +134,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
                     android:padding="@dimen/_7sdp"
-                    android:text="20"
+                    android:text="-"
                     android:textColor="@color/purple_500"
                     android:textSize="@dimen/sp18" />
 

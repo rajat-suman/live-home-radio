@@ -5,7 +5,13 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -19,6 +25,7 @@ import com.livehomeradio.databinding.ActivityMainBinding
 import com.livehomeradio.recycleradapter.AbstractModel
 import com.livehomeradio.utils.ContactsUtil
 import com.livehomeradio.utils.ContactsUtil.getContactList
+import com.livehomeradio.utils.showNegativeAlerter
 import com.livehomeradio.views.callbottomsheet.CallBottomSheet
 import com.livehomeradio.views.home.HomeVM
 import com.nexmo.client.*
@@ -27,8 +34,15 @@ import com.nexmo.client.request_listener.NexmoRequestListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 
+
 @AndroidEntryPoint
 class BaseActivity : AppCompatActivity() {
+
+    private val notification: Uri? =
+        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
+    private var ringtone : Ringtone?=null
+    private var vibrator: Vibrator? = null
+
     companion object {
         var callList = ArrayList<CallModel>()
         var contactsList = ArrayList<ContactsUtil.ContactsModel>()
@@ -38,6 +52,7 @@ class BaseActivity : AppCompatActivity() {
     private val mainVM: MainVM by viewModels()
     private var client: NexmoClient? = null
     var callBottomSheet = CallBottomSheet {
+        ringtone?.stop()
         when (it.status) {
             "accept" -> {
                 answerCall(it.adapterPosition)
@@ -82,39 +97,30 @@ class BaseActivity : AppCompatActivity() {
     }
 
     private fun hangUpCall(adapterPosition: Int) {
-        callList[adapterPosition].nexmoCall.hangup(object : NexmoRequestListener<NexmoCall> {
-            override fun onError(p0: NexmoApiError) {
-            }
-
-            override fun onSuccess(p0: NexmoCall?) {
-                Log.e("onSuccessEnd", "onSuccess")
-                callList.removeAt(adapterPosition)
-                callBottomSheet.updateCalls(callList)
-
-                if (callList.isEmpty()) {
-                    callBottomSheet.dismiss()
+        try {
+            callList[adapterPosition].nexmoCall.hangup(object : NexmoRequestListener<NexmoCall> {
+                override fun onError(p0: NexmoApiError) {
                 }
 
-            }
-        })
+                override fun onSuccess(p0: NexmoCall?) {
+                    Log.e("onSuccessEnd", "onSuccess")
+
+                    callList.removeAt(adapterPosition)
+                    callBottomSheet.updateCalls(callList)
+
+                    if (callList.isEmpty()) {
+                        callBottomSheet.dismiss()
+                    }
+
+                }
+            })
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showNegativeAlerter(e.message ?: "")
+        }
 
     }
-
-    private fun kickUser() {
-        /* position.conversation.kick(
-             call.conversation.allMembers.toList()!![0],
-             object : NexmoRequestListener<NexmoCall> {
-                 override fun onSuccess(p0: NexmoCall?) {
-
-                 }
-
-                 override fun onError(p0: NexmoApiError) {
-
-                 }
-
-             })*/
-    }
-
 
     private var onTokenReceived = object : NexmoCallListeners {
         override fun tokenReceived(token: String) {
@@ -123,6 +129,13 @@ class BaseActivity : AppCompatActivity() {
 
         override fun makeCall(phoneNo: String) {
             makeNexmoCall(phoneNo)
+        }
+
+        override fun onLogout() {
+            client?.logout()
+            client?.removeIncomingCallListeners()
+            client?.removeNewConversationListener()
+            client = null
         }
     }
 
@@ -154,7 +167,7 @@ class BaseActivity : AppCompatActivity() {
         ) {
             return
         }
-        client?.call(phoneNo, NexmoCallHandler.UNKNOWN, callListener)
+        client?.call(phoneNo, NexmoCallHandler.SERVER, callListener)
     }
 
 
@@ -165,6 +178,9 @@ class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        ringtone=  RingtoneManager.getRingtone(this, notification)
+        vibrator=getSystemService(VIBRATOR_SERVICE) as Vibrator
         HomeVM.nexmoCallListener = onTokenReceived
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -281,13 +297,13 @@ class BaseActivity : AppCompatActivity() {
 
                         Log.e("jfjvdbjb", "uscdbdbvvd===$p0")
 
-                         if (p0 == NexmoCallMemberStatus.REJECTED || p0 == NexmoCallMemberStatus.CANCELED|| p0 == NexmoCallMemberStatus.COMPLETED) {
-                             callList.remove(callList.first { callIs -> callIs.nexmoCall == it })
-                             callBottomSheet.updateCalls(callList)
-                             if (callList.isEmpty()) {
-                                 callBottomSheet.dismiss()
-                             }
-                         }
+                        if (p0 == NexmoCallMemberStatus.REJECTED || p0 == NexmoCallMemberStatus.CANCELED || p0 == NexmoCallMemberStatus.COMPLETED) {
+                            callList.remove(callList.first { callIs -> callIs.nexmoCall == it })
+                            callBottomSheet.updateCalls(callList)
+                            if (callList.isEmpty()) {
+                                callBottomSheet.dismiss()
+                            }
+                        }
                     }
 
                     override fun onMuteChanged(p0: NexmoMediaActionState?, p1: NexmoCallMember?) {
@@ -302,6 +318,26 @@ class BaseActivity : AppCompatActivity() {
                     }
 
                 })
+                if (callList.isEmpty()) {
+                    /**
+                     * Play Ringtone*/
+                    ringtone?.play()
+                } else {
+                    /**
+                     * Play Vibration*/
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator?.vibrate(
+                            VibrationEffect.createOneShot(
+                                500,
+                                VibrationEffect.DEFAULT_AMPLITUDE
+                            )
+                        )
+                    } else {
+                        //deprecated in API 26
+                        vibrator?.vibrate(500)
+                    }
+                }
                 callList.add(CallModel(it))
                 if (!callBottomSheet.isAdded)
                     callBottomSheet.show(supportFragmentManager, "")
@@ -318,6 +354,7 @@ class BaseActivity : AppCompatActivity() {
     interface NexmoCallListeners {
         fun tokenReceived(token: String)
         fun makeCall(phoneNo: String)
+        fun onLogout()
     }
 
     data class CallModel(
