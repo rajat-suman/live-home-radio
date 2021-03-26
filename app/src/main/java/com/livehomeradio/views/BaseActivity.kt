@@ -40,7 +40,7 @@ class BaseActivity : AppCompatActivity() {
 
     private val notification: Uri? =
         RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)
-    private var ringtone : Ringtone?=null
+    private var ringtone: Ringtone? = null
     private var vibrator: Vibrator? = null
 
     companion object {
@@ -53,6 +53,11 @@ class BaseActivity : AppCompatActivity() {
     private var client: NexmoClient? = null
     var callBottomSheet = CallBottomSheet {
         ringtone?.stop()
+        if (it == null) {
+            mainVM.navController.navigate(R.id.makeCall)
+            return@CallBottomSheet
+        }
+
         when (it.status) {
             "accept" -> {
                 answerCall(it.adapterPosition)
@@ -100,11 +105,11 @@ class BaseActivity : AppCompatActivity() {
         try {
             callList[adapterPosition].nexmoCall.hangup(object : NexmoRequestListener<NexmoCall> {
                 override fun onError(p0: NexmoApiError) {
+                    Log.e("onErrorEnd", "onError${p0.message}")
                 }
 
                 override fun onSuccess(p0: NexmoCall?) {
                     Log.e("onSuccessEnd", "onSuccess")
-
                     callList.removeAt(adapterPosition)
                     callBottomSheet.updateCalls(callList)
 
@@ -142,12 +147,12 @@ class BaseActivity : AppCompatActivity() {
     private fun makeNexmoCall(phoneNo: String) {
         val callListener = object : NexmoRequestListener<NexmoCall> {
             override fun onSuccess(nexmoCall: NexmoCall?) {
-                callList.add(CallModel(nexmoCall = nexmoCall!!, status = "Ringing"))
+                Log.d("makeNexmoCall", "Call started: ${nexmoCall?.myCallMember?.callStatus}")
+                callList.add(CallModel(nexmoCall = nexmoCall!!, status = "accepted"))
                 if (!callBottomSheet.isAdded) {
                     callBottomSheet.show(supportFragmentManager, "")
                 }
                 callBottomSheet.updateCalls(callList)
-                Log.d("TAG", "Call started: $nexmoCall")
             }
 
             override fun onError(apiError: NexmoApiError) {
@@ -179,8 +184,8 @@ class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ringtone=  RingtoneManager.getRingtone(this, notification)
-        vibrator=getSystemService(VIBRATOR_SERVICE) as Vibrator
+        ringtone = RingtoneManager.getRingtone(this, notification)
+        vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
         HomeVM.nexmoCallListener = onTokenReceived
         val binding: ActivityMainBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_main)

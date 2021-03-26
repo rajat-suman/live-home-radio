@@ -14,7 +14,7 @@ import com.livehomeradio.databinding.CallsSheetBinding
 import com.livehomeradio.recycleradapter.RecyclerAdapter
 import com.livehomeradio.views.BaseActivity
 
-class CallBottomSheet(val valueIs: (BaseActivity.CallModel) -> Unit) :
+class CallBottomSheet(val valueIs: (BaseActivity.CallModel?) -> Unit) :
     BottomSheetDialogFragment() {
     private var binding: CallsSheetBinding? = null
     private val adapter by lazy { RecyclerAdapter<BaseActivity.CallModel>(R.layout.call_adapter) }
@@ -30,6 +30,9 @@ class CallBottomSheet(val valueIs: (BaseActivity.CallModel) -> Unit) :
         isCancelable = false
         binding?.rvFeatures?.adapter = adapter
 
+        binding?.tvAddCall?.setOnClickListener {
+            valueIs(null)
+        }
         dialog.setContentView(binding?.root!!)
         (binding?.root?.parent as View).setBackgroundColor(Color.TRANSPARENT)
     }
