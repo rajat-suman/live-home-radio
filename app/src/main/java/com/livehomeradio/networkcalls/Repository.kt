@@ -69,12 +69,12 @@ class Repository @Inject constructor(
                             activity.resources?.getString(R.string.some_error_occured) ?: ""
                         )
                     }
-                    response.code() == 401 -> {
-                        /**ClientErrors*/
+                  /*  response.code() == 401 -> {
+                        *//**ClientErrors*//*
                         Log.d("errorBody", "====${response.errorBody()?.string()}")
                         activity.sessionExpired()
                         requestProcessor.onError("unAuthorized")
-                    }
+                    }*/
                     response.code() == 404 -> {
                         /**ClientErrors*/
                         requestProcessor.onError(

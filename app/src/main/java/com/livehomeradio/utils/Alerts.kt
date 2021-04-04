@@ -13,9 +13,21 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
+import android.widget.EditText
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.widget.doOnTextChanged
+import androidx.recyclerview.widget.RecyclerView
 import com.livehomeradio.R
 import com.livehomeradio.databinding.AlertLayoutBinding
 import com.livehomeradio.databinding.ProgressLayoutBinding
+import com.livehomeradio.views.BaseActivity
+import com.livehomeradio.views.home.HomeVM
+import com.livehomeradio.views.makecall.ContactsAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 //ErrorAlert
 
@@ -93,6 +105,86 @@ fun Context.showWelcome(onDismiss: (Boolean) -> Unit) {
         e.printStackTrace()
     }
 }
+
+
+/**Make Call*/
+ fun Context.showMakeCall() {
+    try {
+
+        val adapter = ContactsAdapter()
+        getContacts(adapter)
+        val dialog = Dialog(this, android.R.style.Theme_Translucent_NoTitleBar)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.make_call)
+        val window: Window? = dialog.window
+        val wlp: WindowManager.LayoutParams = window?.attributes!!
+        val rvContacts: RecyclerView = dialog.findViewById(R.id.rvContacts)
+        val ivCross: AppCompatImageView = dialog.findViewById(R.id.ivCross)
+        val etSearch: EditText = dialog.findViewById(R.id.etSearch)
+        val etPhoneNumber: EditText = dialog.findViewById(R.id.etPhoneNumber)
+        val btCallDial: AppCompatImageView = dialog.findViewById(R.id.btCallDial)
+
+        ivCross.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        rvContacts.adapter = adapter
+        etSearch.doOnTextChanged { text, _, _, _ ->
+            if (text.toString().trim().isNotEmpty()) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    BaseActivity.db.contactsDao().searchContacts("%${text.toString().trim()}%")
+                        .catch { }.collect {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                adapter.addItems(it)
+                            }
+                        }
+                }
+            } else {
+                getContacts(adapter)
+            }
+        }
+        btCallDial.setOnClickListener {
+            if (etPhoneNumber.text.toString().trim().isNotEmpty()) {
+                HomeVM.nexmoCallListener?.makeCall(etPhoneNumber.text.toString().trim())
+                dialog.dismiss()
+            }
+        }
+        adapter.initClick { position, view ->
+            val number = adapter.getAllItems()[position].number
+            HomeVM.nexmoCallListener?.makeCall(number.trim())
+            dialog.dismiss()
+        }
+
+        wlp.gravity = Gravity.CENTER
+        wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+        window.attributes = wlp
+        dialog.window?.setLayout(
+            ActionBar.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        dialog.show()
+
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+
+
+}
+
+private fun getContacts(adapter: ContactsAdapter) {
+
+    CoroutineScope(Dispatchers.IO).launch {
+        BaseActivity.db.contactsDao().getContacts().catch {
+        }.collect {
+            CoroutineScope(Dispatchers.Main).launch {
+                adapter.addItems(it)
+            }
+        }
+    }
+}
+
+
 
 
 

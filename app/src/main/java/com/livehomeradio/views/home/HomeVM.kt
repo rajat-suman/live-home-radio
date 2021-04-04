@@ -15,6 +15,7 @@ import com.livehomeradio.networkcalls.Repository
 import com.livehomeradio.networkcalls.RetrofitApi
 import com.livehomeradio.pref.PreferenceFile
 import com.livehomeradio.utils.navigateWithId
+import com.livehomeradio.utils.showMakeCall
 import com.livehomeradio.views.BaseActivity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -82,7 +83,8 @@ class HomeVM @Inject constructor(
     }
 
     fun clickMakeCall(view: View) {
-        view.navigateWithId(R.id.action_home2_to_makeCall, null)
+        BaseActivity.contextIs.get()?.showMakeCall()
+//        view.navigateWithId(R.id.action_home2_to_makeCall, null)
     }
 
 }

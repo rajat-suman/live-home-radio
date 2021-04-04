@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -57,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_17sdp"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:imeOptions="actionDone"
                     android:layout_marginEnd="@dimen/_17sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:background="@drawable/bg_stroke"
@@ -85,13 +85,14 @@
                         android:layout_weight="9"
                         android:background="@drawable/bg_stroke"
                         android:hint="@string/enter_phone_number"
+                        android:imeOptions="actionDone"
                         android:inputType="phone"
                         android:padding="@dimen/_10sdp"
                         android:singleLine="true"
                         android:textColor="@color/black"
                         tools:ignore="TextFields" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btCallDial"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"

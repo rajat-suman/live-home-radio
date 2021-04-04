@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.nexmo.android:clientInfrastructures:0.0.6.17@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ade7c0ba9320076965a1e4fba2aa9e60/transformed/jetified-clientInfrastructures-0.0.6.17/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ade7c0ba9320076965a1e4fba2aa9e60/transformed/jetified-clientInfrastructures-0.0.6.17/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ade7c0ba9320076965a1e4fba2aa9e60/transformed/jetified-clientInfrastructures-0.0.6.17/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/c25cbe8779464d942d7ebb4453aa5f16/transformed/jetified-clientInfrastructures-0.0.6.17/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c25cbe8779464d942d7ebb4453aa5f16/transformed/jetified-clientInfrastructures-0.0.6.17/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/c25cbe8779464d942d7ebb4453aa5f16/transformed/jetified-clientInfrastructures-0.0.6.17/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

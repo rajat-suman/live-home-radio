@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.rajputmukesh748:MukeshOtpView:1.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/42c2e69e86ed6e3749e58a00786d5491/transformed/jetified-MukeshOtpView-1.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/42c2e69e86ed6e3749e58a00786d5491/transformed/jetified-MukeshOtpView-1.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/42c2e69e86ed6e3749e58a00786d5491/transformed/jetified-MukeshOtpView-1.0.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/f4385bb3f0449d9aa5cba4f080e6d615/transformed/jetified-MukeshOtpView-1.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f4385bb3f0449d9aa5cba4f080e6d615/transformed/jetified-MukeshOtpView-1.0.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/f4385bb3f0449d9aa5cba4f080e6d615/transformed/jetified-MukeshOtpView-1.0.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
