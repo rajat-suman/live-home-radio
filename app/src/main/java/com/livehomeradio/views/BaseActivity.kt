@@ -127,7 +127,13 @@ class BaseActivity : AppCompatActivity() {
         mainVM.navController = findNavController(R.id.fragmentContainer)
         binding.viewModel = mainVM
         checkPermissions()
-        readContacts()
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_CONTACTS
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            getContactList(contentResolver)
+        }
     }
 
     override fun onBackPressed() {
@@ -152,6 +158,9 @@ class BaseActivity : AppCompatActivity() {
             123 -> {
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED && HomeVM.callToken.isNotEmpty())
                     setupNexmo()
+
+                readContacts()
+
             }
 
             124 -> {

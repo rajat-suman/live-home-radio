@@ -134,7 +134,7 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //Nexmo
-    implementation("com.nexmo.android:client-sdk:2.8.0")
+    implementation("com.nexmo.android:client-sdk:2.8.1")
 
     // Room Persistence db
     implementation "androidx.room:room-runtime:$room_version"

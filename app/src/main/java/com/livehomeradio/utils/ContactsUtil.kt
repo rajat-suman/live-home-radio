@@ -3,6 +3,7 @@ package com.livehomeradio.utils
 import android.content.ContentResolver
 import android.database.Cursor
 import android.provider.ContactsContract
+import android.util.Log
 import com.livehomeradio.roomdb.Contacts
 import com.livehomeradio.views.BaseActivity
 import kotlinx.coroutines.CoroutineScope
@@ -12,8 +13,8 @@ import kotlinx.coroutines.launch
 object ContactsUtil {
     fun getContactList(contentResolver: ContentResolver?) {
 
-
         CoroutineScope(Dispatchers.IO).launch {
+            val list = ArrayList<Contacts>()
             BaseActivity.db.contactsDao().deleteAllContacts()
             val cur: Cursor? =
                 contentResolver?.query(
@@ -47,25 +48,24 @@ object ContactsUtil {
                             null
                         )
                         while (pCur?.moveToNext()!!) {
-                            val phoneNo: String = pCur.getString(
+                            var phoneNo: String = pCur.getString(
                                 pCur.getColumnIndex(
                                     ContactsContract.CommonDataKinds.Phone.NUMBER
                                 )
                             )!!
-
-                            if (phoneNo.contains(" "))
-                                phoneNo.replace(" ", "")
-                            if (phoneNo.contains("+"))
-                                phoneNo.replace("+", "")
-
-                            val contacts = Contacts(name = name, number = phoneNo)
-                            BaseActivity.db.contactsDao().insertContact(contacts)
+                            phoneNo = phoneNo.replace(" ", "").replace("+", "")
+                            val contacts =
+                                Contacts(name = name,
+                                    number = phoneNo)
+                            list.add(contacts)
                         }
                         pCur.close()
                     }
                 }
             }
             cur?.close()
+            BaseActivity.db.contactsDao().insertContact(*list.toTypedArray())
+            contactList = list
         }
     }
 

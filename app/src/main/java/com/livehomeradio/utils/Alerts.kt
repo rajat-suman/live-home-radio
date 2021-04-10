@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.livehomeradio.R
 import com.livehomeradio.databinding.AlertLayoutBinding
 import com.livehomeradio.databinding.ProgressLayoutBinding
+import com.livehomeradio.roomdb.Contacts
 import com.livehomeradio.views.BaseActivity
 import com.livehomeradio.views.home.HomeVM
 import com.livehomeradio.views.makecall.ContactsAdapter
@@ -55,6 +56,7 @@ fun Context.alert(message: String) {
 //Loader
 
 private var customDialog: AlertDialog? = null
+var contactList: List<Contacts>? = null;
 
 fun Context.showProgress() {
     hideProgress()
@@ -174,10 +176,16 @@ fun Context.showWelcome(onDismiss: (Boolean) -> Unit) {
 
 private fun getContacts(adapter: ContactsAdapter) {
 
+    if (contactList != null){
+        adapter.addItems(contactList!!)
+        return
+    }
+
     CoroutineScope(Dispatchers.IO).launch {
         BaseActivity.db.contactsDao().getContacts().catch {
         }.collect {
             CoroutineScope(Dispatchers.Main).launch {
+                contactList = it
                 adapter.addItems(it)
             }
         }

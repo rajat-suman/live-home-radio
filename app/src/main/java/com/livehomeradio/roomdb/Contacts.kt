@@ -2,6 +2,7 @@ package com.livehomeradio.roomdb
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import com.livehomeradio.recycleradapter.AbstractModel
 
@@ -9,8 +10,8 @@ import com.livehomeradio.recycleradapter.AbstractModel
     tableName = "contacts"
 )
 data class Contacts(
-    @ColumnInfo(name = "name") val name: String,
-    @ColumnInfo(name = "number") val number: String
+    @ColumnInfo(name = "name") var name: String,
+    @ColumnInfo(name = "number") var number: String
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
