@@ -1,9 +1,14 @@
 package com.livehomeradio.networkcalls
 
+import android.app.AlertDialog
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.livehomeradio.R
+import com.livehomeradio.datastore.DataStoreUtil
+import com.livehomeradio.datastore.JWT
+import com.livehomeradio.datastore.REMEMBER
 import com.livehomeradio.utils.hideProgress
-import com.livehomeradio.utils.sessionExpired
 import com.livehomeradio.utils.showNegativeAlerter
 import com.livehomeradio.utils.showProgress
 import com.livehomeradio.views.BaseActivity
@@ -17,7 +22,8 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val retrofitApi: RetrofitApi,
-    private val cacheUtil: CacheUtil
+    private val cacheUtil: CacheUtil,
+    private val dataStoreUtil: DataStoreUtil
 ) {
     fun <T> makeCall(
         apiKey: ApiKeys,
@@ -45,7 +51,8 @@ class Repository @Inject constructor(
             dataResponse.catch { exception ->
                 exception.printStackTrace()
                 hideProgress()
-                activity.showNegativeAlerter(exception.message?:"")
+                activity.sessionExpired()
+//                activity.showNegativeAlerter(exception.message ?: "")
             }.collect { response ->
                 Log.d("resCodeIs", "====${response.code()}")
                 hideProgress()
@@ -69,12 +76,12 @@ class Repository @Inject constructor(
                             activity.resources?.getString(R.string.some_error_occured) ?: ""
                         )
                     }
-                  /*  response.code() == 401 -> {
-                        *//**ClientErrors*//*
+                    response.code() == 401 -> {
+                        /**ClientErrors*/
                         Log.d("errorBody", "====${response.errorBody()?.string()}")
                         activity.sessionExpired()
                         requestProcessor.onError("unAuthorized")
-                    }*/
+                    }
                     response.code() == 404 -> {
                         /**ClientErrors*/
                         requestProcessor.onError(
@@ -96,27 +103,54 @@ class Repository @Inject constructor(
                     else -> {
                         /**ClientErrors*/
                         val res = response.errorBody()!!.string()
-                        val jsonObject = JSONObject(res)
-                        when {
-                            jsonObject.has("title") -> {
-                                requestProcessor.onError(jsonObject.getString("title"))
-                                activity
-                                    .showNegativeAlerter(jsonObject.getString("title"))
+                        try {
+                            val jsonObject = JSONObject(res)
+                            when {
+                                jsonObject.has("title") -> {
+                                    requestProcessor.onError(jsonObject.getString("title"))
+                                    activity
+                                        .showNegativeAlerter(jsonObject.getString("title"))
+                                }
+                                else -> {
+                                    requestProcessor.onError(
+                                        activity.resources?.getString(R.string.some_error_occured)
+                                            ?: ""
+                                    )
+                                    activity.showNegativeAlerter(
+                                        activity.resources?.getString(R.string.some_error_occured)
+                                            ?: ""
+                                    )
+                                }
                             }
-                            else -> {
-                                requestProcessor.onError(
-                                    activity.resources?.getString(R.string.some_error_occured)
-                                        ?: ""
-                                )
-                                activity.showNegativeAlerter(
-                                    activity.resources?.getString(R.string.some_error_occured)
-                                        ?: ""
-                                )
-                            }
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            activity.sessionExpired()
                         }
                     }
                 }
             }
         }
     }
+
+
+    /**Session Expired Alert*/
+    private fun Context.sessionExpired() = try {
+        val aD = AlertDialog.Builder(this)
+        aD.setTitle(getString(R.string.session_expired))
+        aD.setCancelable(false)
+        aD.setPositiveButton(getString(R.string.ok)) { dialogInterface, i ->
+            dataStoreUtil.removeKey(JWT) {}
+            dataStoreUtil.removeKey(REMEMBER) {
+                dialogInterface.cancel()
+                dialogInterface.dismiss()
+                (this as BaseActivity).finish()
+                startActivity(Intent(this, BaseActivity::class.java))
+            }
+//        clearPreference()
+        }
+        aD.create()
+        aD.show()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }!!
 }

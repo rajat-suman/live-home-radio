@@ -11,4 +11,7 @@ val BOOLEAN_DATA by lazy { booleanPreferencesKey("BOOLEAN") }
 val LOGIN_DATA by lazy { stringPreferencesKey("LOGIN_DATA") }
 val JWT by lazy { stringPreferencesKey("JWT") }
 val REMEMBER by lazy { booleanPreferencesKey("REMEMBER") }
+val CHECKED by lazy { booleanPreferencesKey("CHECKED") }
+val EMAIL by lazy { stringPreferencesKey("EMAIL") }
+val PASSWORD by lazy { stringPreferencesKey("PASSWORD") }
 val LANGUAGE by lazy { stringPreferencesKey("LANGUAGE") }

@@ -308,21 +308,6 @@ fun getTimeBooking(input: String): String {
     return output
 }
 
-/**Session Expired Alert*/
-fun Context.sessionExpired() = try {
-    val aD = AlertDialog.Builder(this)
-    aD.setTitle(getString(R.string.session_expired))
-    aD.setCancelable(false)
-    aD.setPositiveButton(getString(R.string.ok)) { dialogInterface, i ->
-        dialogInterface.cancel()
-        dialogInterface.dismiss()
-//        clearPreference()
-    }
-    aD.create()
-    aD.show()
-} catch (e: Exception) {
-    e.printStackTrace()
-}!!
 
 fun Context.printHashKey() {
     try {

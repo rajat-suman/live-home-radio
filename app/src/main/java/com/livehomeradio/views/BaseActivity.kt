@@ -228,7 +228,7 @@ class BaseActivity : AppCompatActivity() {
 
     private fun setupNexmo() {
         try {
-            client = NexmoClient.Builder().build(this)
+            client = NexmoClient.Builder().useFirstIceCandidate(true).build(this)
 
             //Connection Listener
             client?.setConnectionListener { connectionStatus, _ ->
@@ -317,7 +317,10 @@ class BaseActivity : AppCompatActivity() {
             callList[adapterPosition].nexmoCall.hangup(object : NexmoRequestListener<NexmoCall> {
                 override fun onError(p0: NexmoApiError) {
                     Log.e("onErrorEnd", "onError${p0.message}")
-                    if (p0.message.equals("{\"description\":\"Conversation does not exist, or you do not have access.\",\"code\":\"conversation:error:not-found\"}")) {
+                    if (p0.message.equals("{\"description\":\"The request failed because the current state of the conversation is INACTIVE. Only GET and DELETE actions are allowed.\",\"code\":\"conversation:error:not-allowed\"}") || p0.message.equals(
+                            "{\"description\":\"Conversation does not exist, or you do not have access.\",\"code\":\"conversation:error:not-found\"}"
+                        )
+                    ) {
                         callList.removeAt(adapterPosition)
                         callBottomSheet.updateCalls(callList)
                         if (callList.isEmpty()) {

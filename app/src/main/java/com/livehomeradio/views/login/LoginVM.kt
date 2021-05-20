@@ -1,13 +1,13 @@
 package com.livehomeradio.views.login
 
 import android.view.View
+import android.widget.CheckBox
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.livehomeradio.R
-import com.livehomeradio.datastore.DataStoreUtil
-import com.livehomeradio.datastore.JWT
-import com.livehomeradio.datastore.REMEMBER
+import com.livehomeradio.datastore.*
 import com.livehomeradio.models.LoginModel
 import com.livehomeradio.networkcalls.ApiKeys
 import com.livehomeradio.networkcalls.ApiProcessor
@@ -32,7 +32,13 @@ class LoginVM @Inject constructor(
 ) : ViewModel() {
     val email by lazy { ObservableField("") }
     val password by lazy { ObservableField("") }
+    val  isRemember by lazy { ObservableBoolean(true) }
 
+    init {
+        dataStore.readData(EMAIL){email.set(it)}
+        dataStore.readData(PASSWORD){password.set(it)}
+        dataStore.readData(CHECKED){isRemember.set(it?:true)}
+    }
 
     fun clickLogin(view: View) {
         val ctx = BaseActivity.contextIs.get()!!
@@ -68,6 +74,14 @@ class LoginVM @Inject constructor(
                     override fun onSuccess(res: Response<LoginModel>) {
                         dataStore.saveData(JWT, res.body()?.jwt ?: "")
                         dataStore.saveData(REMEMBER, true)
+                        dataStore.saveData(CHECKED, isRemember.get())
+                        if(isRemember.get()){
+                            dataStore.saveData(EMAIL, email.get()?.trim()?:"")
+                            dataStore.saveData(PASSWORD, password.get()?.trim()?:"")
+                        }else{
+                            dataStore.saveData(EMAIL, "")
+                            dataStore.saveData(PASSWORD,"")
+                        }
                         view.navigateWithId(R.id.action_login_to_home2, null)
                     }
 
@@ -79,6 +93,11 @@ class LoginVM @Inject constructor(
 
     fun clickForgot(view: View) {
         view.navigateWithId(R.id.action_login_to_forgotPassword, null)
+    }
+
+    fun clickRemember(view: View) {
+        view as CheckBox
+        isRemember .set(view.isChecked)
     }
 
 }
